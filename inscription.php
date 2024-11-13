@@ -1,11 +1,10 @@
 <?php
-    print_r($_POST);
+    print_r($_POST['nom'] . " " . $_POST['email']);
     try {
     $conn = new PDO("mysql:host=db;dbname=satom", "root", "secret");
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION) ;  echo "Connexion réussie";
-    $requete = $conn->prepare("SELECT * FROM users");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION) ;
+    $requete = $conn->prepare('INSERT INTO users (name,email,password) VALUES ("' . $_POST['nom'] . '", "' . $_POST['email'] . '", "' . $_POST['mot_de_passe'] . '")');
     $requete->execute();
-    $resultat = $requete->fetchAll(PDO::FETCH_ASSOC);
     
     } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
