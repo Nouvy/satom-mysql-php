@@ -13,13 +13,14 @@
                     <th scope="col">ID</th>
                     <th scope="col">Nom</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Suppression</th>
                   </tr>
                 </thead>
                 <tbody>
                 <?php
                   try {
                     $conn = new PDO("mysql:host=db;dbname=satom", "root", "secret");
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION) ;  echo "Connexion réussie";
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION) ;
                     $requete = $conn->prepare("SELECT * FROM users");
                     $requete->execute();
                     $resultat = $requete->fetchAll(PDO::FETCH_ASSOC);
@@ -28,8 +29,8 @@
                               <th scope="row">' . $ligne['id'] . '</th>
                               <td>' . $ligne['name'] . '</td>
                               <td>' . $ligne['email'] . '</td>
+                              <td><a href="suppression.php?id=' . $ligne['id'] . '" class="btn btn-danger">Supprimer</a></td>
                             </tr>';
-                      echo "Nom: " . $ligne['name'] . " Email: " . $ligne['email'];
                     }
                   } catch (PDOException $e) {
                     echo "Erreur de connexion : " . $e->getMessage();
